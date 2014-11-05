@@ -1,0 +1,43 @@
+{
+  "name": "redmine",
+  "override_attributes": {
+    "mysql": {
+      "server_root_password": "root",
+      "server_repl_password": "root",
+      "server_debian_password": "root"
+    }
+  },
+  "default_attributes": {
+    "redmine" : {
+      "rails_env" : "production",
+      "thin_servers" : "3",
+      "cron_fetch_changesets" : {
+        "hour" : "*",
+        "minute" : "*/30"
+      },
+      "deploy_to" : "/srv/redmine",
+      "force_deploy" : "false",
+      "database" : {
+        "type" : "mysql2",
+        "name" : "whcredmine",
+        "username" : "whcredmine",
+        "password" : "secret",
+        "hostname" : "localhost",
+        "encoding" : "utf8",
+        "collation" : "utf8_general_ci"
+      },
+      "source" : {
+        "repository" : "https://github.com/WebHostingCoopTeam/redmine",
+        "reference" : "2.3-stable"
+      },
+      "clear_cached_copy" : "true",
+      "hostname" : "mastermind.webhosting.coop"
+    }
+  },
+  "json_class": "Chef::Role",
+  "run_list": [
+    "recipe[redmine::default]"
+  ],
+  "description": "Installs Redmine",
+  "chef_type": "role"
+}
