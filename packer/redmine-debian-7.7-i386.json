@@ -35,9 +35,9 @@
       "ssh_port": 22,
       "ssh_wait_timeout": "10000s",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -hP now",
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_path": "/home/vagrant/VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "packer-debian-7.7-i386",
+      "vm_name": "redmine-packer-debian-7.7-i386",
       "output_directory": "../builds/packer-debian-7.7-i386-virtualbox",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "384" ],
@@ -76,8 +76,8 @@
       "ssh_port": 22,
       "ssh_wait_timeout": "10000s",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -hP now",
-      "vm_name": "pdd-debian-7.7-i386",
-      "output_directory": "../builds/pdd-debian-7.7-i386-qemu"
+      "vm_name": "redmine-packer-debian-7.7-i386",
+      "output_directory": "../builds/redmine-packer-debian-7.7-i386-qemu"
     },
     {
       "type": "vmware-iso",
@@ -176,21 +176,13 @@
         "scripts/common/sshd.sh",
         "scripts/debian/networking.sh",
         "scripts/debian/sudoers.sh",
+        "scripts/common/vagrant.sh",
+        "scripts/common/vmtools.sh",
         "scripts/common/chef.sh",
         "scripts/debian/cleanup.sh",
         "scripts/common/minimize.sh"
       ],
       "type": "shell",
-      "environment_vars": [ "CHEF_VERSION={{user `chef_version`}}" ]
-    },
-    {
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
-      "scripts": [
-        "scripts/common/vagrant.sh",
-        "scripts/common/vmtools.sh"
-      ],
-      "type": "shell",
-      "only": ["virtualbox-iso"],
       "environment_vars": [ "CHEF_VERSION={{user `chef_version`}}" ]
     },
     {
